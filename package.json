@@ -1,0 +1,54 @@
+{
+  "name": "vela-browser",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A privacy-conscious Chromium desktop browser starter built with Electron.",
+  "main": "src/main/main.js",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "test": "node --test",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win nsis",
+    "dist:mac": "electron-builder --mac dmg",
+    "dist:linux": "electron-builder --linux AppImage"
+  },
+  "devDependencies": {
+    "electron": "45.2.2",
+    "electron-builder": "26.18.1"
+  },
+  "build": {
+    "appId": "app.vela.browser",
+    "productName": "VELA Browser",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "README.md",
+      "SECURITY.md"
+    ],
+    "win": {
+      "target": ["nsis"],
+      "artifactName": "VELA-Browser-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": ["dmg"]
+    },
+    "linux": {
+      "target": ["AppImage"]
+    }
+  }
+}
