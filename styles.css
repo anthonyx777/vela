@@ -1,0 +1,116 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b1119;
+  --chrome: #101923;
+  --chrome-raised: #172331;
+  --chrome-hover: #202f3e;
+  --line: rgba(187, 208, 226, .10);
+  --line-strong: rgba(187, 208, 226, .16);
+  --text: #edf4f7;
+  --muted: #8293a3;
+  --subtle: #566878;
+  --accent: #65d6c1;
+  --accent-soft: rgba(101, 214, 193, .12);
+  --danger: #f0a58a;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--bg); }
+body { color: var(--text); user-select: none; }
+button, input { font: inherit; }
+button { color: inherit; }
+.browser-shell { position: relative; z-index: 1; width: 100%; height: 132px; background: var(--chrome); border-bottom: 1px solid var(--line); }
+.chrome { height: 132px; display: flex; flex-direction: column; background: linear-gradient(180deg, #121d28 0%, #0f1822 100%); }
+
+.tab-strip { height: 43px; flex: 0 0 43px; display: flex; align-items: center; gap: 9px; padding: 6px 13px 0 16px; border-bottom: 1px solid rgba(255,255,255,.035); }
+.brand-mark { width: 91px; flex: 0 0 91px; display: flex; align-items: center; gap: 8px; padding-right: 5px; }
+.brand-symbol { width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid rgba(101,214,193,.42); border-radius: 8px 8px 8px 2px; color: var(--accent); font-size: 13px; font-weight: 800; transform: rotate(-4deg); box-shadow: 0 0 18px rgba(101,214,193,.09); }
+.brand-name { color: #dce7eb; letter-spacing: .19em; font-size: 10px; font-weight: 800; }
+.tabs { height: 100%; min-width: 0; flex: 1; display: flex; align-items: end; gap: 4px; overflow: hidden; }
+.tab { position: relative; height: 33px; min-width: 105px; max-width: 218px; flex: 1 1 170px; display: flex; align-items: center; gap: 9px; border: 1px solid transparent; border-bottom: 0; border-radius: 9px 9px 0 0; padding: 0 9px 0 11px; background: transparent; color: #8797a6; cursor: pointer; transition: background .14s ease, color .14s ease; }
+.tab:hover { background: rgba(255,255,255,.035); color: #d8e2e9; }
+.tab.active { background: #1b2936; color: #eaf2f5; border-color: rgba(255,255,255,.045); }
+.tab.active::after { position: absolute; content: ""; height: 2px; bottom: -1px; left: 10px; right: 10px; background: var(--accent); border-radius: 2px; opacity: .8; }
+.tab.private.active::after { background: #b6a1f6; }
+.tab-favicon { width: 14px; flex: 0 0 14px; color: var(--accent); text-align: center; font-size: 13px; }
+.tab.private .tab-favicon { color: #b6a1f6; }
+.tab-title { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; font-size: 11px; font-weight: 540; }
+.tab-close { width: 19px; height: 19px; flex: 0 0 19px; display: grid; place-items: center; border-radius: 5px; color: #778896; font-size: 17px; line-height: 1; opacity: 0; }
+.tab:hover .tab-close, .tab.active .tab-close { opacity: 1; }
+.tab-close:hover { background: rgba(255,255,255,.1); color: white; }
+.icon-button { width: 31px; height: 31px; flex: 0 0 31px; display: inline-grid; place-items: center; border: 1px solid transparent; border-radius: 8px; background: transparent; color: #91a1af; cursor: pointer; transition: background .14s ease, color .14s ease, border-color .14s ease; }
+.icon-button:hover:not(:disabled) { color: #edf5f7; background: var(--chrome-hover); border-color: rgba(255,255,255,.045); }
+.icon-button:disabled { opacity: .33; cursor: default; }
+.icon { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; }
+.icon svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
+.add-tab { margin-left: 1px; }
+.private-tab { color: #aa9ae0; }
+.private-tab.selected { background: rgba(182,161,246,.1); border-color: rgba(182,161,246,.2); color: #c8b9ff; }
+
+.navigation-row { height: 51px; flex: 0 0 51px; display: flex; align-items: center; gap: 13px; padding: 5px 17px 4px 17px; }
+.nav-controls, .right-controls { display: flex; align-items: center; gap: 3px; }
+.nav-button { width: 30px; height: 30px; }
+.address-form { min-width: 120px; height: 36px; flex: 1; display: flex; align-items: center; gap: 9px; padding: 0 7px 0 12px; border: 1px solid rgba(177,201,218,.12); border-radius: 11px; background: #1a2835; box-shadow: inset 0 1px 2px rgba(0,0,0,.16); transition: border-color .14s ease, background .14s ease, box-shadow .14s ease; }
+.address-form:focus-within { border-color: rgba(101,214,193,.57); background: #1c2c39; box-shadow: 0 0 0 3px rgba(101,214,193,.07); }
+.security-indicator { width: 17px; height: 17px; display: inline-flex; flex: 0 0 17px; color: #8395a4; }
+.security-indicator.secure { color: var(--accent); }
+.security-indicator.insecure { color: var(--danger); }
+.address-input { width: 100%; min-width: 0; height: 32px; outline: none; border: 0; background: transparent; color: #e8f0f3; font-size: 12px; letter-spacing: .005em; user-select: text; }
+.address-input::placeholder { color: #718292; }
+.address-input::selection { background: rgba(101,214,193,.3); }
+.address-action { width: 28px; height: 28px; flex: 0 0 28px; display: grid; place-items: center; border: 0; border-radius: 7px; background: transparent; color: #8494a3; cursor: pointer; }
+.address-action:hover { background: rgba(255,255,255,.06); color: #eef5f6; }
+.address-action .icon { width: 15px; height: 15px; }
+.address-action.bookmarked { color: #f1c777; }
+.address-action.bookmarked svg { fill: rgba(241,199,119,.2); }
+.right-controls { gap: 7px; }
+.profile-button { width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid rgba(101,214,193,.23); border-radius: 50%; background: rgba(101,214,193,.07); cursor: pointer; }
+.profile-button:hover { border-color: rgba(101,214,193,.58); background: rgba(101,214,193,.13); }
+.profile-orbit { width: 10px; height: 10px; border: 1.5px solid var(--accent); border-radius: 50%; box-shadow: 4px -3px 0 -2px #0f1822, 4px -3px 0 -1px var(--accent); }
+
+.bookmark-row { height: 35px; flex: 0 0 35px; display: flex; align-items: center; gap: 13px; padding: 0 19px; border-top: 1px solid rgba(255,255,255,.025); color: #718392; overflow: hidden; transition: height .15s ease, flex-basis .15s ease, opacity .15s ease; }
+.bookmark-row.collapsed { height: 0; flex-basis: 0; opacity: 0; border-top: 0; }
+.bookmark-label { display: flex; align-items: center; gap: 7px; flex: 0 0 auto; color: #738593; font-size: 8px; font-weight: 800; letter-spacing: .12em; }
+.bookmark-label .icon { width: 12px; height: 12px; }
+.bookmark-items { display: flex; min-width: 0; align-items: center; gap: 5px; overflow: hidden; }
+.bookmark-chip { max-width: 150px; height: 23px; padding: 0 9px; overflow: hidden; border: 1px solid transparent; border-radius: 6px; background: transparent; color: #a3b0bb; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; cursor: pointer; }
+.bookmark-chip:hover { border-color: rgba(255,255,255,.06); background: rgba(255,255,255,.045); color: #e5edef; }
+.bookmark-empty { color: #596b7a; font-size: 10px; }
+.bookmark-empty[hidden] { display: none; }
+.loading-track { height: 2px; flex: 0 0 2px; overflow: hidden; background: transparent; }
+.loading-track span { display: block; width: 0; height: 100%; background: var(--accent); box-shadow: 0 0 9px rgba(101,214,193,.4); }
+.loading-track.loading span { width: 40%; animation: loadline 1.2s ease-in-out infinite; }
+@keyframes loadline { 0% { transform: translateX(-110%); } 100% { transform: translateX(270%); } }
+.is-loading svg { animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.toast-region { position: fixed; z-index: 20; left: 50%; bottom: 28px; max-width: min(560px, calc(100vw - 36px)); padding: 10px 15px; transform: translate(-50%, 12px); border: 1px solid rgba(255,255,255,.09); border-radius: 9px; background: #192735; box-shadow: 0 12px 34px rgba(0,0,0,.35); color: #e7eff2; font-size: 12px; opacity: 0; pointer-events: none; transition: opacity .16s ease, transform .16s ease; }
+.toast-region.visible { opacity: 1; transform: translate(-50%, 0); }
+
+.privacy-dialog { width: min(440px, calc(100vw - 34px)); padding: 25px; border: 1px solid rgba(150,190,194,.16); border-radius: 18px; background: #111d28; color: var(--text); box-shadow: 0 24px 80px rgba(0,0,0,.55); }
+.privacy-dialog::backdrop { background: rgba(3,8,13,.68); backdrop-filter: blur(4px); }
+.dialog-topline { display: flex; align-items: center; justify-content: space-between; }
+.dialog-kicker { color: #8295a2; font-size: 9px; font-weight: 800; letter-spacing: .17em; }
+.privacy-emblem { width: 49px; height: 49px; display: grid; place-items: center; margin-top: 17px; border: 1px solid rgba(101,214,193,.25); border-radius: 15px; background: rgba(101,214,193,.08); color: var(--accent); }
+.privacy-emblem .icon { width: 26px; height: 26px; }
+.privacy-dialog h2 { margin: 17px 0 8px; font-size: 22px; letter-spacing: -.045em; }
+.privacy-dialog p { color: #a0afba; font-size: 12px; line-height: 1.65; }
+.privacy-facts { display: grid; gap: 14px; margin: 20px 0; padding: 16px; border: 1px solid rgba(255,255,255,.06); border-radius: 12px; background: rgba(255,255,255,.025); }
+.privacy-facts > div { display: flex; align-items: flex-start; gap: 10px; }
+.fact-dot { width: 7px; height: 7px; flex: 0 0 7px; margin-top: 5px; border-radius: 50%; }
+.fact-dot.green { background: var(--accent); box-shadow: 0 0 9px rgba(101,214,193,.5); }
+.privacy-facts strong, .privacy-facts small { display: block; }
+.privacy-facts strong { color: #dce7eb; font-size: 11px; font-weight: 650; }
+.privacy-facts small { margin-top: 3px; color: #8394a1; font-size: 10px; }
+.privacy-dialog .privacy-note { color: #758795; font-size: 10px; }
+.dialog-button { width: 100%; height: 37px; margin-top: 11px; border: 0; border-radius: 9px; background: var(--accent); color: #10211f; font-size: 11px; font-weight: 800; cursor: pointer; }
+.dialog-button:hover { background: #83e5d3; }
+
+@media (max-width: 900px) {
+  .brand-mark { width: 69px; flex-basis: 69px; }
+  .brand-name { display: none; }
+  .navigation-row { gap: 7px; padding-right: 10px; padding-left: 10px; }
+  .right-controls { gap: 2px; }
+  .tab { min-width: 80px; }
+}
