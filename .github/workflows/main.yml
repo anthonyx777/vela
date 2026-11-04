@@ -1,0 +1,90 @@
+
+name: Build VELA Browser for Windows
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    name: Build VELA Windows Installer
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          architecture: x64
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build Windows installer
+        run: npm run dist:win -- --x64 --publish never
+
+      - name: Generate SHA256
+        shell: pwsh
+        run: |
+          $file = Get-ChildItem release/VELA-Browser-Setup-*.exe | Select-Object -First 1
+          if (-not $file) {
+            throw "Installer not found"
+          }
+          $hash = (Get-FileHash $file.FullName -Algorithm SHA256).Hash.ToLower()
+          "$hash  $($file.Name)" | Out-File release/SHA256SUMS.txt -Encoding ascii
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v7
+        with:
+          name: VELA-Browser-Windows
+          path: |
+            release/VELA-Browser-Setup-*.exe
+            release/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 30
+
+  publish-release:
+    needs: build-windows
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download installer
+        uses: actions/download-artifact@v8
+        with:
+          name: VELA-Browser-Windows
+          path: release
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            release/VELA-Browser-Setup-*.exe \
+            release/SHA256SUMS.txt \
+            --verify-tag \
+            --title "VELA Browser ${GITHUB_REF_NAME}" \
+            --generate-notes
